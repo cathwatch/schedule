@@ -1,22 +1,3 @@
 <resources>
-    <string name="app_name">Юслес прога</string>
-    <string name="day_1">Пон</string>
-    <string name="day_2">Вів</string>
-    <string name="day_3">Сер</string>
-    <string name="day_4">Чет</string>
-    <string name="day_5">Пят</string>
-    <string name="day_6">Суб</string>
-
-    <string-array name="Groups">
-        <item>ПІ-20</item>
-        <item>КН-20</item>
-        <item>ІН-20</item>
-        <item>ЄВІ-20</item>
-    </string-array>
-
-    <string-array name="Faculty">
-        <item>Кібернетика</item>
-        <item>Психологія</item>
-        <item>Фізруки</item>
-    </string-array>
+    <string name="app_name">scheduleV2</string>
 </resources>

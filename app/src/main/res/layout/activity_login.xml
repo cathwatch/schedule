@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <TextView
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Вхід"
+        android:textAlignment="center"
+        android:layout_marginTop="40dp"
+        android:textSize="40dp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/email_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintStart_toStartOf="@id/signin"
+        app:layout_constraintTop_toTopOf="@id/signin"
+        app:layout_constraintEnd_toEndOf="@id/signin">
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Електронна адреса"
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pass_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="@id/email_lay"
+        app:layout_constraintStart_toStartOf="@id/email_lay"
+        app:layout_constraintTop_toBottomOf="@id/email_lay">
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Пароль"
+            android:inputType="numberPassword"
+            tools:ignore="TouchTargetSizeCheck"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="100dp"
+        android:text="Увійти"
+        android:textColor="#88000000"
+        android:backgroundTint="#D3D3D3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="@+id/pass_lay"
+        app:layout_constraintStart_toStartOf="@+id/pass_lay"
+        app:layout_constraintTop_toBottomOf="@+id/pass_lay" />
+
+    <ImageView
+        android:id="@+id/email_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_email_24"
+        app:layout_constraintRight_toLeftOf="@id/email_lay"
+        app:layout_constraintTop_toTopOf="@id/email_lay"
+        app:layout_constraintBottom_toBottomOf="@id/email_lay"/>
+
+    <ImageView
+        android:id="@+id/pass_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_lock_24"
+        app:layout_constraintRight_toLeftOf="@id/pass_lay"
+        app:layout_constraintTop_toTopOf="@id/pass_lay"
+        app:layout_constraintBottom_toBottomOf="@id/pass_lay"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
