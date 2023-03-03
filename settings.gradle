@@ -1,8 +1,9 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -12,5 +13,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "scheduleV2"
+rootProject.name = "Schedule"
 include ':app'
