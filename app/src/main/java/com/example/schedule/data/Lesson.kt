@@ -27,10 +27,16 @@ class LessonModel (
     public var url : String? = null,
 );
 
+class Day (
+    public var title: String?,
+    public var lessons: MutableList<LessonModel>?
+);
+
 class Lesson () {
     lateinit var context: Context;
     lateinit var db: FirebaseDatabase;
     var group_name: String? = null;
+    var get_data = false;
 
     public suspend fun genLessons(db: FirebaseDatabase, context: Context, group_name: String?) : List<View> {
         this.db = db;
@@ -59,17 +65,19 @@ class Lesson () {
         return list_view;
     }
 
-    private fun genViews(list: HashMap<String, MutableList<LessonModel>>): List<View> {
+    private fun genViews(list: List<Day>): List<View> {
         var views : MutableList<View> = mutableListOf();
         for (i in list) {
             val view: View = LayoutInflater.from(context).inflate(R.layout.day_header, null);
             val listHeaderText = view.findViewById<AppCompatTextView>(R.id.list_header_text) as AppCompatTextView;
             listHeaderText.setTypeface(null, Typeface.BOLD);
-            listHeaderText.text = i.key;
+            listHeaderText.text = i.title;
+
+            println(i.title);
 
             views.add(view);
 
-            i.value.forEach { lesson ->
+            i.lessons?.forEach { lesson ->
                 val view: View = LayoutInflater.from(context).inflate(R.layout.lesson, null);
 
                 view.findViewById<AppCompatTextView>(R.id.lesson_title).text = lesson.title;
@@ -98,13 +106,11 @@ class Lesson () {
         return views;
     }
 
-    var get_data = false;
-
-    public suspend fun getFromBD(): HashMap<String, MutableList<LessonModel>> {
+    private suspend fun getFromBD(): MutableList<Day> {
         val day_list = db.getReference("$group_name");
 
         var lesson_list : MutableList<LessonModel> = mutableListOf();
-        var lessons_in_day = HashMap<String, MutableList<LessonModel>>();
+        var lessons_in_day : MutableList<Day> = mutableListOf();
 
         day_list.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -120,7 +126,9 @@ class Lesson () {
                         }
                         else {
                             val day_name = lesson.getValue(String::class.java);
-                            lessons_in_day[day_name.toString()] = lesson_list;
+                            var day = Day(day_name.toString(), lesson_list)
+                            lessons_in_day.add(day);
+
                             lesson_list = mutableListOf()
                         }
                     }
@@ -135,7 +143,6 @@ class Lesson () {
         if (lessons_in_day.isEmpty()) {
             delayProject();
         }
-
         return lessons_in_day;
     }
 

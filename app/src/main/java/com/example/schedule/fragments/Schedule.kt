@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager.widget.ViewPager
 import com.example.schedule.data.*
 import com.example.schedule.databinding.FragmentScheduleBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,35 +27,26 @@ import kotlinx.coroutines.launch
 class Schedule : Fragment() {
 
     lateinit var binding : FragmentScheduleBinding;
+    lateinit var tab_layout : TabLayout;
+    lateinit var view_pager_shimmer : ViewPager;
+    lateinit var db : FirebaseDatabase;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentScheduleBinding.inflate(layoutInflater);
 
-        val tab_layout = binding.tabLayout;
-        val view_pager_shimmer = binding.viewPagerShimmer;
+        tab_layout = binding.tabLayout;
+        view_pager_shimmer = binding.viewPagerShimmer;
+        db = Firebase.database;
 
-        // shimmer
-        var adapter_shimmer = PagerAdapter(childFragmentManager);
+        shimmer();
+        getShedule();
 
-        val lessons = Lesson().genPlaceholder(context);
-        val advertisements = Advertisement().genPlaceholder(context);
-        val votes = Vote().genPlaceholder(context);
-        val events = Event().genPlaceholder(context);
+        return binding.root;
+    }
 
-        adapter_shimmer.addFragment(EventFragment(lessons), "Розклад");
-        adapter_shimmer.addFragment(EventFragment(advertisements), "Оголошення");
-        adapter_shimmer.addFragment(EventFragment(votes), "Голосування");
-        adapter_shimmer.addFragment(EventFragment(events), "Події");
-
-        view_pager_shimmer.adapter = adapter_shimmer;
-        binding.shimmerView.startShimmerAnimation();
-        tab_layout.setupWithViewPager(view_pager_shimmer);
-
-        // end shimmer
-
-        val db = Firebase.database;
-
+    private fun getShedule() {
         lifecycleScope.launch {
+            db = Firebase.database;
             val group_name = getGroupName(db);
 
             val viewPager = binding.viewPager;
@@ -72,6 +64,7 @@ class Schedule : Fragment() {
             adapter.addFragment(EventFragment(events),  "Події");
 
             view_pager_shimmer.visibility = View.INVISIBLE;
+            viewPager.visibility= View.VISIBLE;
 
             viewPager.adapter = adapter;
 
@@ -79,8 +72,24 @@ class Schedule : Fragment() {
 
             tab_layout.setupWithViewPager(viewPager);
         }
+    }
 
-        return binding.root;
+    private fun shimmer() {
+        var adapter_shimmer = PagerAdapter(childFragmentManager);
+
+        val lessons = Lesson().genPlaceholder(context);
+        val advertisements = Advertisement().genPlaceholder(context);
+        val votes = Vote().genPlaceholder(context);
+        val events = Event().genPlaceholder(context);
+
+        adapter_shimmer.addFragment(EventFragment(lessons), "Розклад");
+        adapter_shimmer.addFragment(EventFragment(advertisements), "Оголошення");
+        adapter_shimmer.addFragment(EventFragment(votes), "Голосування");
+        adapter_shimmer.addFragment(EventFragment(events), "Події");
+
+        view_pager_shimmer.adapter = adapter_shimmer;
+        binding.shimmerView.startShimmerAnimation();
+        tab_layout.setupWithViewPager(view_pager_shimmer);
     }
 
     private suspend fun getGroupName(db: FirebaseDatabase): String? {
@@ -108,7 +117,7 @@ class Schedule : Fragment() {
         return group_name
     }
 
-    private class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         private var fragmentList = ArrayList<Fragment>()
         private var fragmentTitleList = ArrayList<String>()
 
@@ -120,9 +129,9 @@ class Schedule : Fragment() {
             return fragmentList.size
         }
 
-        fun clearData() {
-            fragmentList = ArrayList<Fragment>()
-            fragmentTitleList = ArrayList<String>()
+        public fun clear() {
+            fragmentList.clear();
+            notifyDataSetChanged();
         }
 
         fun addFragment(fragment: Fragment, title: String) {

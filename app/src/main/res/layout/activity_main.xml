@@ -7,34 +7,17 @@
     tools:context=".MainActivity"
     android:background="@color/main_background">
 
-
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
+    <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:backgroundTint="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </FrameLayout>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -45,6 +28,5 @@
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/white"
         app:menu="@menu/bottom_nav"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
