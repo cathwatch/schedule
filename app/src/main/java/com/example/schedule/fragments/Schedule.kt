@@ -69,7 +69,7 @@ class Schedule : Fragment() {
             adapter.addFragment(EventFragment(lessons), "Розклад");
             adapter.addFragment(EventFragment(advertisements), "Оголошення");
             adapter.addFragment(EventFragment(votes), "Голосування");
-            adapter.addFragment(EventFragment(events), "Події");
+            adapter.addFragment(EventFragment(events),  "Події");
 
             view_pager_shimmer.visibility = View.INVISIBLE;
 

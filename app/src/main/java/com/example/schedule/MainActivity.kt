@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.schedule.databinding.ActivityMainBinding
 import com.example.schedule.fragments.Schedule
@@ -22,6 +23,15 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(Schedule());
         genFragments();
+
+        refreshApp();
+    }
+
+    private fun refreshApp() {
+        binding.swipeToRefresh.setOnRefreshListener {
+            startActivity(this.intent)
+            binding.swipeToRefresh.isRefreshing = false;
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
